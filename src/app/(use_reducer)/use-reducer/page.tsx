@@ -1,49 +1,66 @@
 "use client";
+
 import CounterDisplayer from "@/app/_components/CounterDisplayer";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState } from "react";
-const UsingUseState = () => {
-  const [count, setCount] = useState(0);
+import { useReducer } from "react";
+
+const initialState = { count: 0 };
+
+const reducer = (state: { count: number }, action: { type: string }) => {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    case "double":
+      return { count: state.count * 2 };
+    case "reset":
+      return initialState;
+    default:
+      throw new Error();
+  }
+};
+const UsingUseReducer = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <Card className="flex h-1/2 w-1/2 flex-col items-center justify-center gap-y-10">
         <CardHeader>
-          <CardTitle className="text-3xl">Counter App - Use State</CardTitle>
+          <CardTitle className="text-3xl">Counter App - useReducer</CardTitle>
         </CardHeader>
         <CardContent>
-          <CounterDisplayer count={count} />
+          <CounterDisplayer count={state.count} />
         </CardContent>
         <CardFooter className="w-full flex-row items-center justify-between">
           {[
             {
               label: "Increment",
-              onClick: () => setCount(count + 1),
+              type: "increment",
             },
             {
               label: "Decrement",
-              onClick: () => setCount(count - 1),
+              type: "decrement",
             },
             {
               label: "Double",
-              onClick: () => {},
+              type: "double",
             },
             {
               label: "Reset",
-              onClick: () => setCount(0),
+              type: "reset",
             },
           ].map((button) => (
             <Button
               key={button.label}
-              onClick={button.onClick}
+              onClick={() => dispatch({ type: button.type })}
               size={"lg"}
               variant={"outline"}
             >
@@ -55,4 +72,4 @@ const UsingUseState = () => {
     </div>
   );
 };
-export default UsingUseState;
+export default UsingUseReducer;
