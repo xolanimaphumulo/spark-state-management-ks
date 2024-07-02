@@ -5,6 +5,7 @@ import { GeistSans } from "geist/font/sans";
 import { TRPCReactProvider } from "@/trpc/react";
 import { NotifierProvider } from "./contexts/NotifierContext";
 import { Toaster } from "@/components/ui/toaster";
+import { Provider } from "jotai";
 
 export const metadata = {
   title: "Create T3 App",
@@ -21,7 +22,9 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>
-          <NotifierProvider>{children}</NotifierProvider>
+          <NotifierProvider>
+            <Provider>{children}</Provider>
+          </NotifierProvider>
         </TRPCReactProvider>
         <Toaster />
       </body>
