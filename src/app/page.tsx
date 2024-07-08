@@ -28,7 +28,12 @@ export default async function Home() {
 
           {
             label: "TanStack Query",
-            href: "tanstack-react-query",
+            href: "using-tanstack",
+          },
+
+          {
+            label: "Data Fetching (NO TanStack)",
+            href: "without-tanstack",
           },
           {
             label: "jotai",
